@@ -12,7 +12,7 @@ def evaluate(db_path):
     output={}
     with db:
         db.execute('DELETE FROM decision')
-        db.execute("DELETE FROM issue WHERE code IN ('sequence_gap','clock_drift','bad_transition','seal_mismatch','temperature_gap','temperature_excursion','missing_stage')")
+        db.execute("DELETE FROM issue WHERE code IN ('sequence_gap','clock_drift','bad_transition','seal_mismatch','temperature_gap','temperature_excursion','temperature_overlap','clock_untrusted','missing_stage')")
         batches={r['id']:r for r in db.execute('SELECT * FROM batch')}
         all_events=[dict(r) for r in db.execute('SELECT * FROM raw_event ORDER BY event_time,id')]
         by_box=defaultdict(list); by_device=defaultdict(list)
@@ -26,9 +26,16 @@ def evaluate(db_path):
                 bad_device.add(device)
                 db.execute('INSERT INTO issue(code,detail) VALUES (?,?)',('sequence_gap',device))
             anchors=[e for e in events if e['kind']=='clock_anchor']
+            def offset(event):
+                payload=json.loads(event['payload'])
+                if 'device_time' in payload and 'reference_time' in payload:
+                    return (parse_time(payload['reference_time'])-parse_time(payload['device_time'])).total_seconds()
+                return float(payload['offset_seconds'])
+            if not anchors and any(e['kind']!='clock_anchor' for e in events):
+                bad_device.add(device)
+                db.execute('INSERT INTO issue(code,detail) VALUES (?,?)',('clock_untrusted',device))
             for a,b in zip(anchors,anchors[1:]):
-                pa,pb=json.loads(a['payload']),json.loads(b['payload'])
-                if abs(float(pa.get('offset_seconds',0))-float(pb.get('offset_seconds',0)))>120:
+                if abs(offset(a)-offset(b))>120:
                     bad_device.add(device)
                     db.execute('INSERT INTO issue(code,detail) VALUES (?,?)',('clock_drift',device))
         for box in db.execute('SELECT * FROM box'):
@@ -45,8 +52,16 @@ def evaluate(db_path):
                     seal=json.loads(e['payload']).get('seal')
                     if not seals or seals.pop()!=seal: problems.append('seal_mismatch')
             if seals: problems.append('seal_mismatch')
-            temps=[e for e in events if e['kind']=='temperature']
-            temps.sort(key=lambda e:parse_time(e['event_time']))
+            candidates=[e for e in events if e['kind']=='temperature']
+            by_time=defaultdict(list)
+            for e in candidates:by_time[e['event_time']].append(e)
+            temps=[]
+            for stamp,group in sorted(by_time.items()):
+                trusted=[e for e in group if e['device'] not in bad_device]
+                options=trusted or group
+                values={json.loads(e['payload']).get('value') for e in options}
+                if len(values)>1:problems.append('temperature_overlap')
+                temps.append(sorted(options,key=lambda e:e['id'])[0])
             spec=batches[box['batch_id']]
             if stages and temps:
                 start=parse_time(stages[0]['event_time']); end=parse_time(stages[-1]['event_time'])
@@ -62,7 +77,7 @@ def evaluate(db_path):
                     if (t-bad_start).total_seconds()>=60*spec['max_excursion_min']:
                         problems.append('temperature_excursion')
                 else: bad_start=None
-            if any(e['device'] in bad_device for e in events): problems.append('sequence_gap')
+            if any(e['device'] in bad_device for e in events): problems.append('clock_untrusted')
             for code in sorted(set(problems)):
                 db.execute('INSERT INTO issue(code,detail) VALUES (?,?)',(code,box['id']))
             result='异常' if any(p in problems for p in ('bad_transition','seal_mismatch','temperature_excursion')) else ('证据不足' if problems else '完整')
