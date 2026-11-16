@@ -19,6 +19,8 @@ def report(db_path,out):
     data={'decisions':[dict(r) for r in db.execute('SELECT * FROM decision ORDER BY box_id')],
           'issues':[dict(r) for r in db.execute('SELECT * FROM issue ORDER BY id')],
           'events':[dict(r) for r in db.execute('SELECT * FROM raw_event ORDER BY id')],
+          'runs':[dict(r) for r in db.execute('SELECT * FROM run ORDER BY id')],
+          'evidence':[dict(r) for r in db.execute('SELECT * FROM evidence ORDER BY id')],
           'sources':[dict(r) for r in db.execute('SELECT * FROM source_file ORDER BY id')]}
     for row in data['issues']:row.pop('id',None)
     out=Path(out);out.parent.mkdir(parents=True,exist_ok=True)

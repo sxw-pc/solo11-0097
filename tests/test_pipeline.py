@@ -101,3 +101,26 @@ def test_init_is_idempotent(tmp_path):
 def test_markdown_report_exists(tmp_path):
     path=demo(tmp_path)
     assert path.with_suffix('.md').exists()
+
+def test_evidence_and_run_are_persisted(tmp_path):
+    data=json.loads(demo(tmp_path).read_text(encoding='utf-8'))
+    assert data["runs"]
+    assert data['evidence']
+    assert all(e['run_id'] for e in data['evidence'])
+
+def test_unknown_box_replays_after_registration(tmp_path):
+    db=tmp_path/'x.db';init(db,'b','x')
+    event=ev('dispatch',1);event['box_id']='later';emit(tmp_path,[event],db)
+    init(db,'b','later')
+    assert json.loads(connect(db).execute("SELECT payload FROM raw_event WHERE box_id='later'").fetchone()[0])['kind']=='dispatch'
+    assert 'later' in evaluate(db)
+def test_clock_offset_from_anchor_pair(tmp_path):
+    db=tmp_path/'x.db';init(db,'b','x')
+    one=ev('clock_anchor',1,device_time='2026-01-01T00:00:00Z',reference_time='2026-01-01T00:00:10Z')
+    two=ev('clock_anchor',2,'2026-01-01T00:10:00Z',device_time='2026-01-01T00:10:00Z',reference_time='2026-01-01T00:10:10Z')
+    emit(tmp_path,[one,two,ev('dispatch',3,'2026-01-01T00:11:00Z')],db);evaluate(db)
+    assert connect(db).execute("SELECT count(*) FROM issue WHERE code='clock_drift'").fetchone()[0]==0
+def test_decision_links_run_and_evidence(tmp_path):
+    data=json.loads(demo(tmp_path).read_text(encoding='utf-8'))
+    assert data['decisions'][0]['run_id']==data['runs'][0]['id']
+    assert set(json.loads(data['decisions'][0]['detail'])['events']) <= {e['object_id'] for e in data['evidence']}

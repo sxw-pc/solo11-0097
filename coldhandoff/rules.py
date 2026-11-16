@@ -1,4 +1,5 @@
 import json
+from hashlib import sha256
 from collections import defaultdict
 from datetime import timedelta
 
@@ -15,6 +16,11 @@ def evaluate(db_path):
         db.execute("DELETE FROM issue WHERE code IN ('sequence_gap','clock_drift','bad_transition','seal_mismatch','temperature_gap','temperature_excursion','temperature_overlap','clock_untrusted','missing_stage')")
         batches={r['id']:r for r in db.execute('SELECT * FROM batch')}
         all_events=[dict(r) for r in db.execute('SELECT * FROM raw_event ORDER BY event_time,id')]
+        source_digest=sha256('|'.join(r['hash'] for r in db.execute('SELECT hash FROM source_file ORDER BY hash')).encode()).hexdigest()
+        run_id=sha256(('1:'+source_digest).encode()).hexdigest()
+        db.execute('INSERT OR IGNORE INTO run VALUES (?,?,?)',(run_id,'1',source_digest))
+        for event in all_events:
+            db.execute('INSERT OR REPLACE INTO evidence VALUES (?,?,?,?,?,?,?)',(event['hash'],run_id,event['box_id'] or '__clock__',event['source_id'],'raw_event',event['id'],event['hash']))
         by_box=defaultdict(list); by_device=defaultdict(list)
         for event in all_events:
             by_box[event['box_id']].append(event)
@@ -82,7 +88,7 @@ def evaluate(db_path):
                 db.execute('INSERT INTO issue(code,detail) VALUES (?,?)',(code,box['id']))
             result='异常' if any(p in problems for p in ('bad_transition','seal_mismatch','temperature_excursion')) else ('证据不足' if problems else '完整')
             detail=json.dumps({'events':[e['id'] for e in events],'problems':sorted(set(problems))},ensure_ascii=False)
-            db.execute('INSERT INTO decision VALUES (?,?,?,?)',(box['id'],result,detail,VERSION))
+            db.execute('INSERT INTO decision VALUES (?,?,?,?,?)',(box['id'],result,detail,VERSION,run_id))
             output[box['id']]=result
     db.close()
     return output
