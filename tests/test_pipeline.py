@@ -72,3 +72,32 @@ def test_demo_repeat_is_deterministic(tmp_path):
     first=demo(tmp_path).read_bytes()
     second=demo(tmp_path).read_bytes()
     assert first==second
+
+def test_source_hash_and_event_chain(tmp_path):
+    data=json.loads(demo(tmp_path).read_text(encoding='utf-8'))
+    assert len(data['sources'][0]['hash'])==64
+    assert len(data['events'])==7
+    assert json.loads(data['decisions'][0]['detail'])['events']
+def test_no_clock_anchor_is_untrusted(tmp_path):
+    db=tmp_path/'x.db';init(db,'b','x')
+    emit(tmp_path,[ev('dispatch',1)],db);evaluate(db)
+    assert connect(db).execute("SELECT count(*) FROM issue WHERE code='clock_untrusted'").fetchone()[0]
+def test_matching_seal_does_not_create_mismatch(tmp_path):
+    db=tmp_path/'x.db';init(db,'b','x')
+    emit(tmp_path,[ev('open',1,seal='A'),ev('reseal',2,'2026-01-01T00:01:00Z',seal='A')],db);evaluate(db)
+    assert connect(db).execute("SELECT count(*) FROM issue WHERE code='seal_mismatch'").fetchone()[0]==0
+def test_overlap_retains_both_raw_events(tmp_path):
+    db=tmp_path/'x.db';init(db,'b','x')
+    emit(tmp_path,[ev('temperature',1,value=4),ev('temperature',2,value=5)],db);evaluate(db)
+    assert connect(db).execute("SELECT count(*) FROM raw_event WHERE kind='temperature'").fetchone()[0]==2
+    assert connect(db).execute("SELECT count(*) FROM issue WHERE code='temperature_overlap'").fetchone()[0]==1
+def test_bad_time_is_isolated(tmp_path):
+    db=tmp_path/'x.db';init(db,'b','x')
+    emit(tmp_path,[ev('dispatch',1,ts='bad')],db)
+    assert connect(db).execute("SELECT count(*) FROM issue WHERE code='parse_error'").fetchone()[0]==1
+def test_init_is_idempotent(tmp_path):
+    db=tmp_path/'x.db';init(db,'b','x');init(db,'b','x')
+    assert connect(db).execute('SELECT count(*) FROM box').fetchone()[0]==1
+def test_markdown_report_exists(tmp_path):
+    path=demo(tmp_path)
+    assert path.with_suffix('.md').exists()
