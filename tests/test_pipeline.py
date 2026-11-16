@@ -67,3 +67,8 @@ def test_gap_is_unknown(tmp_path):
     db=tmp_path/'x.db';init(db,'b','x')
     emit(tmp_path,[ev('dispatch',1),ev('temperature',2,value=4),ev('arrival',3,'2026-01-01T01:00:00Z'),ev('sign',4,'2026-01-01T01:00:00Z')],db)
     assert evaluate(db)['x']=='证据不足'
+
+def test_demo_repeat_is_deterministic(tmp_path):
+    first=demo(tmp_path).read_bytes()
+    second=demo(tmp_path).read_bytes()
+    assert first==second
