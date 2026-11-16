@@ -24,7 +24,11 @@ def rows(path):
     if path.suffix=='.csv':
         reader=csv.DictReader(io.StringIO(raw.decode('utf-8-sig')))
     elif path.suffix=='.jsonl':
-        reader=(json.loads(line) for line in raw.decode('utf-8-sig').splitlines() if line.strip())
+        reader=[]
+        for line in raw.decode('utf-8-sig').splitlines():
+            if not line.strip():continue
+            try:reader.append(json.loads(line))
+            except json.JSONDecodeError:reader.append({'_parse_error':line})
     else:
         raise ValueError('unsupported_file')
     return raw,list(reader)
@@ -37,9 +41,10 @@ def ingest(path,db_path):
         return {'imported':0,'duplicate_file':True}
     imported=0
     with db:
-        sid=db.execute('INSERT INTO source_file(name,hash) VALUES (?,?)',(str(path),h)).lastrowid
+        sid=db.execute('INSERT INTO source_file(name,hash,raw) VALUES (?,?,?)',(str(path),h,raw)).lastrowid
         for line_no,row in enumerate(records,1):
             try:
+                if '_parse_error' in row:raise ValueError('malformed_json:'+row['_parse_error'])
                 kind=str(row['kind'])
                 if kind not in KINDS: raise ValueError('unknown_kind')
                 device=str(row['device'])

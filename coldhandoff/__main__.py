@@ -1,4 +1,5 @@
 import argparse
+import base64
 import json
 import tempfile
 from pathlib import Path
@@ -24,7 +25,7 @@ def report(db_path,out):
           'sources':[dict(r) for r in db.execute('SELECT * FROM source_file ORDER BY id')]}
     for row in data['issues']:row.pop('id',None)
     out=Path(out);out.parent.mkdir(parents=True,exist_ok=True)
-    out.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
+    out.write_text(json.dumps(data,ensure_ascii=False,indent=2,default=lambda v:{'base64':base64.b64encode(v).decode('ascii')}),encoding='utf-8')
     out.with_suffix('.md').write_text('# 冷链交接结论\n\n'+'\n'.join(f"- {d['box_id']}: {d['result']}（规则 {d['rules_version']}）" for d in data['decisions'])+'\n',encoding='utf-8')
     db.close(); return out
 
