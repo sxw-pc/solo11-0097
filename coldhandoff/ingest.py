@@ -53,6 +53,13 @@ def ingest(path,db_path):
                 ts=str(row['event_time'])
                 parse_time(ts)
                 if kind!='clock_anchor' and not box: raise ValueError('box_required')
+                if kind=='clock_anchor':
+                    if row.get('offset_seconds') is not None:
+                        float(row['offset_seconds'])
+                    else:
+                        parse_time(str(row['device_time']));parse_time(str(row['reference_time']))
+                if kind=='temperature':
+                    float(row['value'])
                 event_hash=digest(json.dumps(row,sort_keys=True,ensure_ascii=False).encode())
                 old=db.execute('SELECT hash FROM raw_event WHERE device=? AND seq=? LIMIT 1',(device,seq)).fetchone()
                 if old:

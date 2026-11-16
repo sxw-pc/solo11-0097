@@ -8,10 +8,11 @@ from .ingest import ingest
 from .rules import evaluate
 from .store import connect
 
-def init(db_path,batch_id,box_id):
+def init(db_path,batch_id,box_id,correction='step',max_clock_drift_s=120):
+    if correction not in ('step','linear'): raise ValueError(f'unknown correction rule: {correction}')
     db=connect(db_path)
     with db:
-        db.execute('INSERT OR IGNORE INTO batch VALUES (?,?,?,?)',(batch_id,2.0,8.0,10))
+        db.execute('INSERT OR IGNORE INTO batch(id,min_temp,max_temp,max_excursion_min,correction,max_clock_drift_s) VALUES (?,?,?,?,?,?)',(batch_id,2.0,8.0,10,correction,max_clock_drift_s))
         db.execute('INSERT OR IGNORE INTO box VALUES (?,?)',(box_id,batch_id))
     db.close()
 
@@ -22,6 +23,8 @@ def report(db_path,out):
           'events':[dict(r) for r in db.execute('SELECT * FROM raw_event ORDER BY id')],
           'runs':[dict(r) for r in db.execute('SELECT * FROM run ORDER BY id')],
           'evidence':[dict(r) for r in db.execute('SELECT * FROM evidence ORDER BY id')],
+          'corrections':[dict(r) for r in db.execute('SELECT * FROM time_correction ORDER BY id')],
+          'batches':[dict(r) for r in db.execute('SELECT * FROM batch ORDER BY id')],
           'sources':[dict(r) for r in db.execute('SELECT * FROM source_file ORDER BY id')]}
     for row in data['issues']:row.pop('id',None)
     out=Path(out);out.parent.mkdir(parents=True,exist_ok=True)
@@ -44,14 +47,14 @@ def main():
     p=argparse.ArgumentParser(description='离线冷链交接证据采录')
     sub=p.add_subparsers(dest='command',required=True)
     d=sub.add_parser('demo');d.add_argument('--workdir')
-    i=sub.add_parser('init');i.add_argument('--db',required=True);i.add_argument('--batch',required=True);i.add_argument('--box',required=True)
+    i=sub.add_parser('init');i.add_argument('--db',required=True);i.add_argument('--batch',required=True);i.add_argument('--box',required=True);i.add_argument('--correction',default='step',choices=['step','linear']);i.add_argument('--max-clock-drift',type=int,default=120)
     a=sub.add_parser('ingest');a.add_argument('file');a.add_argument('--db',required=True)
     e=sub.add_parser('evaluate');e.add_argument('--db',required=True)
     r=sub.add_parser('report');r.add_argument('--db',required=True);r.add_argument('--out',required=True)
     x=sub.add_parser('inspect');x.add_argument('--db',required=True);x.add_argument('--box',required=True)
     args=p.parse_args()
     if args.command=='demo': print(demo(args.workdir or tempfile.mkdtemp(prefix='coldhandoff-')))
-    elif args.command=='init': init(args.db,args.batch,args.box)
+    elif args.command=='init': init(args.db,args.batch,args.box,correction=args.correction,max_clock_drift_s=args.max_clock_drift)
     elif args.command=='ingest': print(ingest(args.file,args.db))
     elif args.command=='evaluate': print(evaluate(args.db))
     elif args.command=='report': print(report(args.db,args.out))
