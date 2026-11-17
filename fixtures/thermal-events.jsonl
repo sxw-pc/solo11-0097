@@ -1,0 +1,8 @@
+{"kind":"clock_anchor","device":"logger-thermal","seq":1,"event_time":"2030-06-01T00:00:00Z","offset_seconds":0}
+{"kind":"dispatch","device":"logger-thermal","seq":2,"box_id":"box-thermal","event_time":"2030-06-01T00:00:00Z"}
+{"kind":"temperature","device":"logger-thermal","seq":3,"box_id":"box-thermal","event_time":"2030-06-01T00:00:00Z","value":4}
+{"kind":"temperature","device":"logger-thermal","seq":4,"box_id":"box-thermal","event_time":"2030-06-01T00:05:00Z","value":12}
+{"kind":"temperature","device":"logger-thermal","seq":5,"box_id":"box-thermal","event_time":"2030-06-01T00:20:00Z","value":4}
+{"kind":"temperature","device":"logger-thermal","seq":6,"box_id":"box-thermal","event_time":"2030-06-01T00:30:00Z","value":4}
+{"kind":"arrival","device":"logger-thermal","seq":7,"box_id":"box-thermal","event_time":"2030-06-01T00:30:00Z"}
+{"kind":"sign","device":"logger-thermal","seq":8,"box_id":"box-thermal","event_time":"2030-06-01T00:30:00Z"}

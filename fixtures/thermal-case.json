@@ -1,0 +1,1 @@
+{"box_id":"box-thermal","sample_count":4,"ambient_interpretation":"zero_order_hold","initial_core":4,"core_limit":8,"max_core_excursion_min":10,"package_profiles":{"fast_pack":{"tau_minutes":10},"insulated_pack":{"tau_minutes":40}}}
