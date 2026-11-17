@@ -1,0 +1,9 @@
+{
+  "case_id":"evidence-export-2030-06-08",
+  "batch_id":"batch-1",
+  "recipient_contracts":["regulator_full","partner_pseudonymous"],
+  "sensitive_tokens":["MIRA-PRIVATE"],
+  "partner_salt_key_id":"synthetic-key-1",
+  "partner_keep_fields":["box_link","event_order","decision","issue_code"],
+  "partner_drop_fields":["actor_name","original_source_path","raw_original_bytes"]
+}
