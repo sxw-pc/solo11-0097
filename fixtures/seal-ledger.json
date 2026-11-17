@@ -1,0 +1,14 @@
+{
+  "case_id":"seal-S42-2030-06-06",
+  "serial":"S-42",
+  "authority_contracts":["manufacturer_reissue","escrow_original"],
+  "manufacturer_reissue":[
+    {"id":"ISS-1","kind":"issue","box_id":"A","at":"2030-06-06T07:30:00+08:00","issuer":"MFG"},
+    {"id":"DEST-1","kind":"witnessed_destroy","box_id":"A","at":"2030-06-06T09:00:00+08:00","issuer":"MFG"},
+    {"id":"ISS-2","kind":"reissue","box_id":"B","at":"2030-06-06T09:30:00+08:00","issuer":"MFG"}
+  ],
+  "escrow_original":[
+    {"id":"ISS-1","kind":"issue","box_id":"A","at":"2030-06-06T07:30:00+08:00","issuer":"ESCROW"},
+    {"id":"HOLD-1","kind":"no_reissue_authorized","at":"2030-06-06T10:30:00+08:00","issuer":"ESCROW"}
+  ]
+}
