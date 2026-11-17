@@ -11,6 +11,11 @@ CREATE TABLE IF NOT EXISTS issue(id INTEGER PRIMARY KEY, event_id INTEGER REFERE
 CREATE TABLE IF NOT EXISTS run(id TEXT PRIMARY KEY, rules_version TEXT NOT NULL, source_digest TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS evidence(id TEXT PRIMARY KEY, run_id TEXT NOT NULL REFERENCES run(id), subject_id TEXT NOT NULL, source_id INTEGER REFERENCES source_file(id), object_kind TEXT NOT NULL, object_id INTEGER NOT NULL, detail TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS decision(box_id TEXT PRIMARY KEY REFERENCES box(id), result TEXT NOT NULL, detail TEXT NOT NULL, rules_version TEXT NOT NULL, run_id TEXT NOT NULL REFERENCES run(id));
+CREATE TABLE IF NOT EXISTS hold_case(id TEXT PRIMARY KEY,payload TEXT NOT NULL,digest TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS hold_box(case_id TEXT NOT NULL REFERENCES hold_case(id),box_id TEXT NOT NULL REFERENCES box(id),temperature REAL NOT NULL,period INTEGER NOT NULL,PRIMARY KEY(case_id,box_id));
+CREATE TABLE IF NOT EXISTS hold_action(id TEXT PRIMARY KEY,case_id TEXT NOT NULL REFERENCES hold_case(id),period INTEGER NOT NULL,cooled_box TEXT,result TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS hold_cooler(case_id TEXT PRIMARY KEY REFERENCES hold_case(id),remaining_cycles INTEGER NOT NULL);
+CREATE TABLE IF NOT EXISTS hold_observation(id TEXT PRIMARY KEY,case_id TEXT NOT NULL REFERENCES hold_case(id),box_id TEXT NOT NULL,period INTEGER NOT NULL,actual_temperature REAL NOT NULL,source_hash TEXT NOT NULL,UNIQUE(case_id,box_id,period));
 """
 
 def connect(path):

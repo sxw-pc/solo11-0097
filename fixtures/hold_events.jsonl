@@ -1,0 +1,14 @@
+{"kind": "clock_anchor", "device": "device-A", "seq": 1, "box_id": "", "event_time": "2026-01-01T07:59:00+00:00", "value": null, "offset_seconds": 0}
+{"kind": "dispatch", "device": "device-A", "seq": 2, "box_id": "box-A", "event_time": "2026-01-01T08:00:00+00:00", "value": null, "offset_seconds": null}
+{"kind": "temperature", "device": "device-A", "seq": 3, "box_id": "box-A", "event_time": "2026-01-01T08:00:00+00:00", "value": 4, "offset_seconds": null}
+{"kind": "temperature", "device": "device-A", "seq": 4, "box_id": "box-A", "event_time": "2026-01-01T08:20:00+00:00", "value": 4, "offset_seconds": null}
+{"kind": "temperature", "device": "device-A", "seq": 5, "box_id": "box-A", "event_time": "2026-01-01T08:40:00+00:00", "value": 4, "offset_seconds": null}
+{"kind": "arrival", "device": "device-A", "seq": 6, "box_id": "box-A", "event_time": "2026-01-01T08:40:00+00:00", "value": null, "offset_seconds": null}
+{"kind": "sign", "device": "device-A", "seq": 7, "box_id": "box-A", "event_time": "2026-01-01T08:40:00+00:00", "value": null, "offset_seconds": null}
+{"kind": "clock_anchor", "device": "device-B", "seq": 1, "box_id": "", "event_time": "2026-01-01T07:59:00+00:00", "value": null, "offset_seconds": 0}
+{"kind": "dispatch", "device": "device-B", "seq": 2, "box_id": "box-B", "event_time": "2026-01-01T08:00:00+00:00", "value": null, "offset_seconds": null}
+{"kind": "temperature", "device": "device-B", "seq": 3, "box_id": "box-B", "event_time": "2026-01-01T08:00:00+00:00", "value": 4, "offset_seconds": null}
+{"kind": "temperature", "device": "device-B", "seq": 4, "box_id": "box-B", "event_time": "2026-01-01T08:20:00+00:00", "value": 4, "offset_seconds": null}
+{"kind": "temperature", "device": "device-B", "seq": 5, "box_id": "box-B", "event_time": "2026-01-01T08:40:00+00:00", "value": 4, "offset_seconds": null}
+{"kind": "arrival", "device": "device-B", "seq": 6, "box_id": "box-B", "event_time": "2026-01-01T08:40:00+00:00", "value": null, "offset_seconds": null}
+{"kind": "sign", "device": "device-B", "seq": 7, "box_id": "box-B", "event_time": "2026-01-01T08:40:00+00:00", "value": null, "offset_seconds": null}

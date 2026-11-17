@@ -1,0 +1,50 @@
+{
+  "boxes": [
+    {
+      "id": "box-A",
+      "source_hash": "29da729d506e67cf13ff21aef20679427b1f0ad55e0150be6b4d9d07c3dd17d2",
+      "initial_temperature": 4,
+      "minimum_temperature": 2,
+      "hold_max_temperature": 6,
+      "cooling": 3
+    },
+    {
+      "id": "box-B",
+      "source_hash": "29da729d506e67cf13ff21aef20679427b1f0ad55e0150be6b4d9d07c3dd17d2",
+      "initial_temperature": 4,
+      "minimum_temperature": 2,
+      "hold_max_temperature": 5,
+      "cooling": 3
+    }
+  ],
+  "periods": [
+    {
+      "ambient_gain": {
+        "box-A": 2,
+        "box-B": 2
+      },
+      "cooling_price_cents": 100
+    },
+    {
+      "ambient_gain": {
+        "box-A": 2,
+        "box-B": 2
+      },
+      "cooling_price_cents": 1000
+    },
+    {
+      "ambient_gain": {
+        "box-A": 2,
+        "box-B": 2
+      },
+      "cooling_price_cents": 500
+    }
+  ],
+  "max_total_exposure": 8,
+  "contracts": [
+    "min_energy",
+    "min_max_box_exposure"
+  ],
+  "coolant_cycles": 2,
+  "max_final_temperature": 8
+}
