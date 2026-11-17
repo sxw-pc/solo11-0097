@@ -1,0 +1,9 @@
+{
+  "case_id":"cold-sources-2030-06-07",
+  "representations":["fixed_64","record_chunks"],
+  "fixed_chunk_bytes":64,
+  "record_encoding":"utf-8-jsonl-preserve-delimiters",
+  "reader_hold_seconds":30,
+  "concurrent_ingest_allowed":true,
+  "garbage_collection_grace_seconds":60
+}
