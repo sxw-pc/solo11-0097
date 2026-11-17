@@ -1,0 +1,8 @@
+{
+  "case_id":"source-anchor-2030-06-09",
+  "leaf_order":"source_id_append_order",
+  "domain_tags":{"leaf":"cold-source-v1","node":"cold-node-v1"},
+  "checkpoint_policies":["local_signed","dual_witness"],
+  "witnesses":[{"id":"W1","role":"local"},{"id":"W2","role":"external"}],
+  "failure_injection":"after_checkpoint_persist_before_witness_receipt"
+}
