@@ -1,0 +1,1 @@
+{"carrier":"A","signature":"A-MOCK-SIGNED-2026-17","effective":"2026-11-17T00:00:00+08:00","expiry":"2026-12-01T00:00:00+08:00","service_alias":{"ICE24":"COLD24"},"temperature":"2-8C","min_kg":5,"max_kg":10,"base_cents":400,"cold_surcharge_cents":100,"fuel_percent":0}

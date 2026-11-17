@@ -1,0 +1,2 @@
+carrier,revision,service,temperature,min_kg,max_kg,base_cents,cold_surcharge_cents,fuel_percent
+B,9,FROZEN-24,2-8C,0,10,650,100,0
