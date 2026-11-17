@@ -1,0 +1,11 @@
+{
+  "case_id":"label-run-2030-06-05",
+  "labels":[
+    {"box_id":"A","recipient":"CLIENT-ALPHA","opaque_id":"TKN-A-001","serial":"SER-0001"},
+    {"box_id":"B","recipient":"CLIENT-BETA","opaque_id":"TKN-B-002","serial":"SER-0002"}
+  ],
+  "print_modes":["direct_recipient","opaque_pickup"],
+  "printer":{"id":"PRN-1","journal_supported":true},
+  "verifier":{"id":"SCAN-1","must_read_back":true},
+  "jam_injection":{"after_serial":"SER-0001","point":"after_physical_print_before_ack"}
+}
