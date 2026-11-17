@@ -1,0 +1,15 @@
+{
+  "case_id":"cold-payment-2030-06-11",
+  "invoices":[
+    {"id":"INV-A","box_id":"A","cents":8000,"merchant":"M1"},
+    {"id":"INV-B","box_id":"B","cents":8000,"merchant":"M1"}
+  ],
+  "bank_credits":[
+    {"id":"C1","cents":8000,"eligible_invoice_ids":["INV-A","INV-B"],"bank_reference":"AMBIG-1"},
+    {"id":"C2","cents":8000,"eligible_invoice_ids":["INV-A"],"bank_reference":"A-ONLY"}
+  ],
+  "payout_contracts":["merchant_gross","carrier_commission"],
+  "carrier_commission_basis_points":1000,
+  "bank_sender":"synthetic-bank",
+  "carrier":"CARRIER-1"
+}
