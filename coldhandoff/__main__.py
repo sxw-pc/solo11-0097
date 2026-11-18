@@ -7,6 +7,7 @@ from pathlib import Path
 from .ingest import ingest
 from .rules import evaluate
 from .store import connect
+from . import tariffs
 
 def init(db_path,batch_id,box_id):
     db=connect(db_path)
@@ -40,6 +41,32 @@ def demo(workdir):
     ingest(src,db); evaluate(db)
     return report(db,workdir/'report.json')
 
+def tariff_register(args):
+    print(json.dumps(tariffs.register(args.db, args.case, args.contract, args.source_dir),
+                     ensure_ascii=False))
+
+
+def tariff_build(args):
+    print(json.dumps({'version_id': tariffs.build_version(args.db, args.case, args.authority)},
+                     ensure_ascii=False))
+
+
+def tariff_publish(args):
+    endpoint = tariffs.MockRateMaster(lose_ack=bool(args.lose_ack),
+                                      partial_services=bool(args.partial_services))
+    print(json.dumps(tariffs.publish(args.db, args.case, args.authority, endpoint),
+                     ensure_ascii=False))
+
+
+def tariff_quote(args):
+    print(json.dumps(tariffs.quote(args.db, args.case), ensure_ascii=False, indent=2))
+
+
+def tariff_report(args):
+    print(json.dumps(tariffs.write_reports(args.db, args.case, args.out),
+                     ensure_ascii=False, indent=2))
+
+
 def main():
     p=argparse.ArgumentParser(description='离线冷链交接证据采录')
     sub=p.add_subparsers(dest='command',required=True)
@@ -49,6 +76,11 @@ def main():
     e=sub.add_parser('evaluate');e.add_argument('--db',required=True)
     r=sub.add_parser('report');r.add_argument('--db',required=True);r.add_argument('--out',required=True)
     x=sub.add_parser('inspect');x.add_argument('--db',required=True);x.add_argument('--box',required=True)
+    t=sub.add_parser('tariff-register');t.add_argument('--db',required=True);t.add_argument('--case',required=True);t.add_argument('--contract',required=True);t.add_argument('--source-dir',required=True);t.set_defaults(func=tariff_register)
+    b=sub.add_parser('tariff-build');b.add_argument('--db',required=True);b.add_argument('--case',required=True);b.add_argument('--authority',required=True,choices=list(tariffs.ALLOWED_AUTHORITIES));b.set_defaults(func=tariff_build)
+    pu=sub.add_parser('tariff-publish');pu.add_argument('--db',required=True);pu.add_argument('--case',required=True);pu.add_argument('--authority',required=True,choices=list(tariffs.ALLOWED_AUTHORITIES));pu.add_argument('--lose-ack',action='store_true');pu.add_argument('--partial-services',action='store_true');pu.set_defaults(func=tariff_publish)
+    q=sub.add_parser('tariff-quote');q.add_argument('--db',required=True);q.add_argument('--case',required=True);q.set_defaults(func=tariff_quote)
+    tr=sub.add_parser('tariff-report');tr.add_argument('--db',required=True);tr.add_argument('--case',required=True);tr.add_argument('--out',required=True);tr.set_defaults(func=tariff_report)
     args=p.parse_args()
     if args.command=='demo': print(demo(args.workdir or tempfile.mkdtemp(prefix='coldhandoff-')))
     elif args.command=='init': init(args.db,args.batch,args.box)
@@ -57,4 +89,6 @@ def main():
     elif args.command=='report': print(report(args.db,args.out))
     elif args.command=='inspect':
         db=connect(args.db); print(json.dumps({'decision':[dict(r) for r in db.execute('SELECT * FROM decision WHERE box_id=?',(args.box,))],'events':[dict(r) for r in db.execute('SELECT * FROM raw_event WHERE box_id=? ORDER BY event_time,id',(args.box,))]},ensure_ascii=False));db.close()
+    else:
+        args.func(args)
 if __name__=='__main__': main()

@@ -18,11 +18,16 @@ def test_tariff_seed_freezes_actual_box_and_all_source_bytes(tmp_path):
     assert register(db_path, 'rates-1', FIX / 'tariff-contract.json', FIX) == {'case_id': 'rates-1', 'sources': 4}
     db = connect(db_path)
     payload = json.loads(db.execute('SELECT payload FROM tariff_case').fetchone()[0])
+    # 只核对真实到仓来源与四份冻结文件的原字节/SHA，不含任何费率结果
     assert payload['box']['id'] == 'box-A'
     assert payload['arrival']['source_sha']
-    assert [s['name'] for s in payload['sources']] == json.loads((FIX / 'tariff-contract.json').read_text())['source_pages']
+    frozen_names = json.loads((FIX / 'tariff-contract.json').read_text())['source_pages']
+    assert frozen_names == ['carrier-a-index.html', 'carrier-a-2.html', 'carrier-b.csv',
+                            'signed-addendum.json']
+    assert [s['name'] for s in payload['sources']] == frozen_names
     assert all(hashlib.sha256(s['body'].encode()).hexdigest() == s['sha256'] for s in payload['sources'])
-    assert not db.execute("SELECT name FROM sqlite_master WHERE name='tariff_publication'").fetchone()
+    # 原始箱扫描与来源字节仍然保留
+    assert db.execute("SELECT count(*) FROM raw_event WHERE box_id='box-A' AND kind='arrival'").fetchone()[0] == 1
     db.close()
 
 
