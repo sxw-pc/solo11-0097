@@ -11,6 +11,10 @@ CREATE TABLE IF NOT EXISTS issue(id INTEGER PRIMARY KEY, event_id INTEGER REFERE
 CREATE TABLE IF NOT EXISTS run(id TEXT PRIMARY KEY, rules_version TEXT NOT NULL, source_digest TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS evidence(id TEXT PRIMARY KEY, run_id TEXT NOT NULL REFERENCES run(id), subject_id TEXT NOT NULL, source_id INTEGER REFERENCES source_file(id), object_kind TEXT NOT NULL, object_id INTEGER NOT NULL, detail TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS decision(box_id TEXT PRIMARY KEY REFERENCES box(id), result TEXT NOT NULL, detail TEXT NOT NULL, rules_version TEXT NOT NULL, run_id TEXT NOT NULL REFERENCES run(id));
+CREATE TABLE IF NOT EXISTS export_case(id TEXT PRIMARY KEY, batch_id TEXT NOT NULL REFERENCES batch(id), contract_sha256 TEXT NOT NULL, contract_json TEXT NOT NULL, source_digest TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS pseudonym_key(key_id TEXT PRIMARY KEY, salt BLOB NOT NULL, created_at TEXT NOT NULL, rotated_from TEXT);
+CREATE TABLE IF NOT EXISTS export_package(id TEXT PRIMARY KEY, case_id TEXT NOT NULL, contract_kind TEXT NOT NULL, recipient_id TEXT NOT NULL, version INTEGER NOT NULL, key_id TEXT NOT NULL, frozen_source_digest TEXT NOT NULL, digest_commitment TEXT NOT NULL, contract_sha256 TEXT NOT NULL, status TEXT NOT NULL, content_digest TEXT, manifest_json TEXT, staged_at TEXT NOT NULL, confirmed_at TEXT, receipt_json TEXT, UNIQUE(case_id,contract_kind,recipient_id,version));
+CREATE TABLE IF NOT EXISTS export_id_map(id INTEGER PRIMARY KEY, package_id TEXT NOT NULL, object_kind TEXT NOT NULL, original_id TEXT NOT NULL, original_hash TEXT, export_id TEXT NOT NULL, export_hash TEXT, UNIQUE(package_id,object_kind,original_id));
 """
 
 def connect(path):

@@ -1,0 +1,85 @@
+{
+  "checks": [
+    {
+      "detail": "",
+      "name": "file_hash:decisions.json",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "file_hash:events.json",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "file_hash:evidence.json",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "file_hash:issues.json",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "file_hash:report.md",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "file_hash:runs.json",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "file_hash:sources.json",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "file_hash:sources/privacy-events.jsonl",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "all_file_hashes",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "manifest_present",
+      "ok": true
+    },
+    {
+      "detail": "[]",
+      "name": "reference_graph_closed",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "source_bytes:SRC-1",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "source_hashes",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "regulator_byte_fidelity",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "regulator_original_digest",
+      "ok": true
+    }
+  ],
+  "contract_kind": "regulator_full",
+  "leak_findings": [],
+  "ok": true,
+  "package_id": "pkg-evidence-export-2030-06-08-regulator-primary-v1",
+  "recipient_id": "regulator-primary",
+  "version": 1
+}

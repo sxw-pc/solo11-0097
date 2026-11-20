@@ -1,0 +1,103 @@
+{
+  "case_id": "evidence-export-2030-06-08",
+  "confirmed_at": "2026-11-20T19:52:33.493845+00:00",
+  "content_digest": "aba8c60dc7462a983b3a8b3096d20c3dd205769520adf1cefc8ae1bfc7666272",
+  "contract_kind": "partner_pseudonymous",
+  "digest_commitment": "2bd9da9f539c5a5c3b913407798a8b6d",
+  "key_id": "synthetic-key-1",
+  "package_id": "pkg-evidence-export-2030-06-08-partner-primary-v1",
+  "recipient_id": "partner-primary",
+  "verification": [
+    {
+      "detail": "",
+      "name": "file_hash:decisions.json",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "file_hash:events.json",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "file_hash:evidence.json",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "file_hash:issues.json",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "file_hash:report.md",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "file_hash:runs.json",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "file_hash:sources.json",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "file_hash:sources/source-bd6a675347de.jsonl",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "all_file_hashes",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "manifest_present",
+      "ok": true
+    },
+    {
+      "detail": "[]",
+      "name": "reference_graph_closed",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "source_bytes:bd6a675347de1747",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "source_hashes",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "events_embedded_in_rebuilt_sources",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "export_hashes_not_original",
+      "ok": true
+    },
+    {
+      "detail": "[]",
+      "name": "no_private_leak",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "no_original_source_hash",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "no_mapping_table",
+      "ok": true
+    }
+  ],
+  "version": 1
+}

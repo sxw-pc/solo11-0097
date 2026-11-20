@@ -1,0 +1,10 @@
+[
+  {
+    "box_id": "A",
+    "detail": "{\"events\": [\"EVT-2\", \"EVT-3\", \"EVT-4\", \"EVT-5\", \"EVT-6\"], \"problems\": []}",
+    "export_id": "DEC-A",
+    "result": "完整",
+    "rules_version": "1",
+    "run_export_id": "RUN-28b22c7d62b690f1122d80de6a475e7853c855a994b0b55e457b96a743d28459"
+  }
+]

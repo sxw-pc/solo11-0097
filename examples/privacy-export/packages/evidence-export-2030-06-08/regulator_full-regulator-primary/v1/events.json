@@ -1,0 +1,130 @@
+[
+  {
+    "box_id": "",
+    "device": "logger-1",
+    "event_time": "2030-06-08T07:59:00Z",
+    "export_id": "EVT-1",
+    "hash": "33deace2866fb3b839203df754d92744f9d2e1fc5aef04eb5c9e1602b56ab131",
+    "kind": "clock_anchor",
+    "line_no": 1,
+    "original_hash": "33deace2866fb3b839203df754d92744f9d2e1fc5aef04eb5c9e1602b56ab131",
+    "original_id": 1,
+    "payload": {
+      "actor": "MIRA-PRIVATE",
+      "device": "logger-1",
+      "event_time": "2030-06-08T07:59:00Z",
+      "kind": "clock_anchor",
+      "offset_seconds": 0,
+      "seq": 1
+    },
+    "seq": 1,
+    "source_export_id": "SRC-1"
+  },
+  {
+    "box_id": "A",
+    "device": "logger-1",
+    "event_time": "2030-06-08T08:00:00Z",
+    "export_id": "EVT-2",
+    "hash": "f9df7738b478615dadfbf6a8d63a065fa67c3fd46730d8a3b900f307c7b0c3f5",
+    "kind": "dispatch",
+    "line_no": 2,
+    "original_hash": "f9df7738b478615dadfbf6a8d63a065fa67c3fd46730d8a3b900f307c7b0c3f5",
+    "original_id": 2,
+    "payload": {
+      "actor": "MIRA-PRIVATE",
+      "box_id": "A",
+      "device": "logger-1",
+      "event_time": "2030-06-08T08:00:00Z",
+      "kind": "dispatch",
+      "seq": 2
+    },
+    "seq": 2,
+    "source_export_id": "SRC-1"
+  },
+  {
+    "box_id": "A",
+    "device": "logger-1",
+    "event_time": "2030-06-08T08:00:00Z",
+    "export_id": "EVT-3",
+    "hash": "d07a794a412d2a4d85e730fbb50eb9cd3dd1eabb2df3f3ffb951052247574b80",
+    "kind": "temperature",
+    "line_no": 3,
+    "original_hash": "d07a794a412d2a4d85e730fbb50eb9cd3dd1eabb2df3f3ffb951052247574b80",
+    "original_id": 3,
+    "payload": {
+      "actor": "MIRA-PRIVATE",
+      "box_id": "A",
+      "device": "logger-1",
+      "event_time": "2030-06-08T08:00:00Z",
+      "kind": "temperature",
+      "seq": 3,
+      "value": 4
+    },
+    "seq": 3,
+    "source_export_id": "SRC-1"
+  },
+  {
+    "box_id": "A",
+    "device": "logger-1",
+    "event_time": "2030-06-08T08:20:00Z",
+    "export_id": "EVT-4",
+    "hash": "ddec53099b40b125d551e09391b100007b58793118ca5deb126068d58a499fe7",
+    "kind": "temperature",
+    "line_no": 4,
+    "original_hash": "ddec53099b40b125d551e09391b100007b58793118ca5deb126068d58a499fe7",
+    "original_id": 4,
+    "payload": {
+      "actor": "MIRA-PRIVATE",
+      "box_id": "A",
+      "device": "logger-1",
+      "event_time": "2030-06-08T08:20:00Z",
+      "kind": "temperature",
+      "seq": 4,
+      "value": 4
+    },
+    "seq": 4,
+    "source_export_id": "SRC-1"
+  },
+  {
+    "box_id": "A",
+    "device": "logger-1",
+    "event_time": "2030-06-08T08:20:00Z",
+    "export_id": "EVT-5",
+    "hash": "e5af84a1d175856acb135ae76507f8033da3a7f4da35ef2cc6c757896d4ec81f",
+    "kind": "arrival",
+    "line_no": 5,
+    "original_hash": "e5af84a1d175856acb135ae76507f8033da3a7f4da35ef2cc6c757896d4ec81f",
+    "original_id": 5,
+    "payload": {
+      "actor": "MIRA-PRIVATE",
+      "box_id": "A",
+      "device": "logger-1",
+      "event_time": "2030-06-08T08:20:00Z",
+      "kind": "arrival",
+      "seq": 5
+    },
+    "seq": 5,
+    "source_export_id": "SRC-1"
+  },
+  {
+    "box_id": "A",
+    "device": "logger-1",
+    "event_time": "2030-06-08T08:20:00Z",
+    "export_id": "EVT-6",
+    "hash": "ebb712d76658ff4786879d5d777389d7394813ccf6c55f1b077c3fb4ce925a63",
+    "kind": "sign",
+    "line_no": 6,
+    "original_hash": "ebb712d76658ff4786879d5d777389d7394813ccf6c55f1b077c3fb4ce925a63",
+    "original_id": 6,
+    "payload": {
+      "actor": "MIRA-PRIVATE",
+      "box_id": "A",
+      "device": "logger-1",
+      "event_time": "2030-06-08T08:20:00Z",
+      "kind": "sign",
+      "seq": 6
+    },
+    "seq": 6,
+    "source_export_id": "SRC-1"
+  }
+]

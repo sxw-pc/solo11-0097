@@ -1,0 +1,6 @@
+{"kind":"clock_anchor","device":"logger-1","seq":1,"event_time":"2030-06-08T07:59:00Z","offset_seconds":0,"actor":"MIRA-PRIVATE"}
+{"kind":"dispatch","device":"logger-1","seq":2,"box_id":"A","event_time":"2030-06-08T08:00:00Z","actor":"MIRA-PRIVATE"}
+{"kind":"temperature","device":"logger-1","seq":3,"box_id":"A","event_time":"2030-06-08T08:00:00Z","value":4,"actor":"MIRA-PRIVATE"}
+{"kind":"temperature","device":"logger-1","seq":4,"box_id":"A","event_time":"2030-06-08T08:20:00Z","value":4,"actor":"MIRA-PRIVATE"}
+{"kind":"arrival","device":"logger-1","seq":5,"box_id":"A","event_time":"2030-06-08T08:20:00Z","actor":"MIRA-PRIVATE"}
+{"kind":"sign","device":"logger-1","seq":6,"box_id":"A","event_time":"2030-06-08T08:20:00Z","actor":"MIRA-PRIVATE"}

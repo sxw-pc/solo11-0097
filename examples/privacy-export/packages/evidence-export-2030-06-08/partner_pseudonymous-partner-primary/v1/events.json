@@ -1,0 +1,118 @@
+[
+  {
+    "box_id": "",
+    "device": "logger-1",
+    "event_time": "2030-06-08T07:59:00Z",
+    "export_hash": "7dc8f0757920e3b01ae0596cea0a3416491c4c56faa9010641195b5c3ddbb116",
+    "export_id": "1abdec5605fbf2ed",
+    "kind": "clock_anchor",
+    "line_no": 1,
+    "payload": {
+      "actor": "PN-8129E44FFA3E",
+      "device": "logger-1",
+      "event_time": "2030-06-08T07:59:00Z",
+      "kind": "clock_anchor",
+      "offset_seconds": 0,
+      "seq": 1
+    },
+    "seq": 1,
+    "source_export_id": "bd6a675347de1747"
+  },
+  {
+    "box_id": "A",
+    "device": "logger-1",
+    "event_time": "2030-06-08T08:00:00Z",
+    "export_hash": "f4d5edb4117de8a76e58d98f02b267f9d600ed47e5dbf2d3e5ef3c6f88953eab",
+    "export_id": "fd9c592bf17e5205",
+    "kind": "dispatch",
+    "line_no": 2,
+    "payload": {
+      "actor": "PN-8129E44FFA3E",
+      "box_id": "A",
+      "device": "logger-1",
+      "event_time": "2030-06-08T08:00:00Z",
+      "kind": "dispatch",
+      "seq": 2
+    },
+    "seq": 2,
+    "source_export_id": "bd6a675347de1747"
+  },
+  {
+    "box_id": "A",
+    "device": "logger-1",
+    "event_time": "2030-06-08T08:00:00Z",
+    "export_hash": "98d7aeed63cccd5e1a67bae4ba9c777571a386683f23b964a2cd28e333988dbb",
+    "export_id": "a8a163682f486a16",
+    "kind": "temperature",
+    "line_no": 3,
+    "payload": {
+      "actor": "PN-8129E44FFA3E",
+      "box_id": "A",
+      "device": "logger-1",
+      "event_time": "2030-06-08T08:00:00Z",
+      "kind": "temperature",
+      "seq": 3,
+      "value": 4
+    },
+    "seq": 3,
+    "source_export_id": "bd6a675347de1747"
+  },
+  {
+    "box_id": "A",
+    "device": "logger-1",
+    "event_time": "2030-06-08T08:20:00Z",
+    "export_hash": "ce222d4a459dc9be65302fa55702175ae232cc553a721424d35a348e9fe2e721",
+    "export_id": "dbb21e57f4babb45",
+    "kind": "temperature",
+    "line_no": 4,
+    "payload": {
+      "actor": "PN-8129E44FFA3E",
+      "box_id": "A",
+      "device": "logger-1",
+      "event_time": "2030-06-08T08:20:00Z",
+      "kind": "temperature",
+      "seq": 4,
+      "value": 4
+    },
+    "seq": 4,
+    "source_export_id": "bd6a675347de1747"
+  },
+  {
+    "box_id": "A",
+    "device": "logger-1",
+    "event_time": "2030-06-08T08:20:00Z",
+    "export_hash": "25ab814e016e89a8667dad9290f9a54ede8333a7eab2ddf88fbf2b0fd28a882d",
+    "export_id": "5220334323b7eee9",
+    "kind": "arrival",
+    "line_no": 5,
+    "payload": {
+      "actor": "PN-8129E44FFA3E",
+      "box_id": "A",
+      "device": "logger-1",
+      "event_time": "2030-06-08T08:20:00Z",
+      "kind": "arrival",
+      "seq": 5
+    },
+    "seq": 5,
+    "source_export_id": "bd6a675347de1747"
+  },
+  {
+    "box_id": "A",
+    "device": "logger-1",
+    "event_time": "2030-06-08T08:20:00Z",
+    "export_hash": "6420cc0c7394877ec884041960cadc6d69894d51b7f4ff49c775b06aeae041db",
+    "export_id": "91fe133d25257d52",
+    "kind": "sign",
+    "line_no": 6,
+    "payload": {
+      "actor": "PN-8129E44FFA3E",
+      "box_id": "A",
+      "device": "logger-1",
+      "event_time": "2030-06-08T08:20:00Z",
+      "kind": "sign",
+      "seq": 6
+    },
+    "seq": 6,
+    "source_export_id": "bd6a675347de1747"
+  }
+]

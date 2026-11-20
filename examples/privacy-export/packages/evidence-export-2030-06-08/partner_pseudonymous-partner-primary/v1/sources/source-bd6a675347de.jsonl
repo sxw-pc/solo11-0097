@@ -1,0 +1,7 @@
+{"_restricted_export": true, "_binding": "11b37f2940841a66"}
+{"actor":"PN-8129E44FFA3E","device":"logger-1","event_time":"2030-06-08T07:59:00Z","kind":"clock_anchor","offset_seconds":0,"seq":1}
+{"actor":"PN-8129E44FFA3E","box_id":"A","device":"logger-1","event_time":"2030-06-08T08:00:00Z","kind":"dispatch","seq":2}
+{"actor":"PN-8129E44FFA3E","box_id":"A","device":"logger-1","event_time":"2030-06-08T08:00:00Z","kind":"temperature","seq":3,"value":4}
+{"actor":"PN-8129E44FFA3E","box_id":"A","device":"logger-1","event_time":"2030-06-08T08:20:00Z","kind":"temperature","seq":4,"value":4}
+{"actor":"PN-8129E44FFA3E","box_id":"A","device":"logger-1","event_time":"2030-06-08T08:20:00Z","kind":"arrival","seq":5}
+{"actor":"PN-8129E44FFA3E","box_id":"A","device":"logger-1","event_time":"2030-06-08T08:20:00Z","kind":"sign","seq":6}

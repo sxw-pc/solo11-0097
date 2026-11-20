@@ -1,0 +1,32 @@
+{
+  "case_id": "evidence-export-2030-06-08",
+  "content_digest": "ac704ac38435633a28c2d796a6874066f4d0ac9b15191e9f84fdbfcee26c5618",
+  "contract_kind": "regulator_full",
+  "contract_sha256": "b01cc76e2aa7042d2ece0acc81278be962955b49d5631bb5cecc69f97e280075",
+  "counts": {
+    "decisions.json": 1,
+    "events.json": 6,
+    "evidence.json": 6,
+    "issues.json": 0,
+    "runs.json": 1,
+    "sources.json": 1
+  },
+  "created_at": "2026-11-20T19:52:33.476115+00:00",
+  "files": {
+    "decisions.json": "810bf9c68a86e766343f622b6726d188530d15eee9f4f04d2c53f99311a3793c",
+    "events.json": "2a654b3ecd3da6fd5142f51b49feab9980154571e9bd256f2f47974056e0d5be",
+    "evidence.json": "016c0b98383e183a507569c2fb1008a43c09039c54cdb21752687d8ad92f2170",
+    "issues.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "report.md": "b9029ed9e5f1d7356eaf5afca263c4985dce793e539745b775f954dd26bc3ca3",
+    "runs.json": "02a0412a163fcd466823f6be9c4133a551d0f886e23b1a765ee62ccf2616433c",
+    "sources.json": "2a6336ba6c05d8945743601417b0742cc863e804b0125f278fe0d2e20830087c",
+    "sources/privacy-events.jsonl": "7a0aba4a367fee6a572c0fe562c122a0b83824fc492967d96825c953c4ea0b5d"
+  },
+  "format_version": 1,
+  "frozen_source_digest": "b3bbc96d830c0419255922b3a75a7026ea95b0e7496289535c5801aa8f5ea6da",
+  "key_id": "",
+  "package_id": "pkg-evidence-export-2030-06-08-regulator-primary-v1",
+  "recipient_id": "regulator-primary",
+  "source_digest_commitment": "b3bbc96d830c0419255922b3a75a7026ea95b0e7496289535c5801aa8f5ea6da",
+  "version": 1
+}
