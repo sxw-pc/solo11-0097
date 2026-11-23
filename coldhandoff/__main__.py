@@ -4,6 +4,7 @@ import json
 import tempfile
 from pathlib import Path
 
+from . import audit_anchor
 from .ingest import ingest
 from .rules import evaluate
 from .store import connect
@@ -40,7 +41,13 @@ def demo(workdir):
     ingest(src,db); evaluate(db)
     return report(db,workdir/'report.json')
 
-def main():
+def _emit(obj,out):
+    text=json.dumps(obj,ensure_ascii=False,indent=2)
+    if out:
+        out=Path(out);out.parent.mkdir(parents=True,exist_ok=True);out.write_text(text,encoding='utf-8');print(out)
+    else: print(text)
+
+def main(argv=None):
     p=argparse.ArgumentParser(description='离线冷链交接证据采录')
     sub=p.add_subparsers(dest='command',required=True)
     d=sub.add_parser('demo');d.add_argument('--workdir')
@@ -49,7 +56,19 @@ def main():
     e=sub.add_parser('evaluate');e.add_argument('--db',required=True)
     r=sub.add_parser('report');r.add_argument('--db',required=True);r.add_argument('--out',required=True)
     x=sub.add_parser('inspect');x.add_argument('--db',required=True);x.add_argument('--box',required=True)
-    args=p.parse_args()
+    ar=sub.add_parser('anchor-register');ar.add_argument('--db',required=True);ar.add_argument('--contract',required=True)
+    sy=sub.add_parser('anchor-sync');sy.add_argument('--db',required=True)
+    ac=sub.add_parser('anchor-checkpoint');ac.add_argument('--db',required=True);ac.add_argument('--policy',required=True,choices=audit_anchor.POLICIES)
+    aw=sub.add_parser('anchor-witness');aw.add_argument('--request',required=True);aw.add_argument('--witness',required=True);aw.add_argument('--out',required=True);aw.add_argument('--fork',action='store_true')
+    aa=sub.add_parser('anchor-ack');aa.add_argument('--db',required=True);aa.add_argument('--ack',required=True)
+    rc=sub.add_parser('anchor-recover');rc.add_argument('--db',required=True)
+    ai=sub.add_parser('anchor-inclusion');ai.add_argument('--db',required=True);ai.add_argument('--source-id',type=int,required=True);ai.add_argument('--out')
+    co=sub.add_parser('anchor-consistency');co.add_argument('--db',required=True);co.add_argument('--old-size',type=int,required=True);co.add_argument('--new-size',type=int);co.add_argument('--out')
+    ae=sub.add_parser('anchor-export');ae.add_argument('--db',required=True);ae.add_argument('--size',type=int,required=True);ae.add_argument('--policy',required=True,choices=audit_anchor.POLICIES);ae.add_argument('--out',required=True)
+    av=sub.add_parser('anchor-verify-package');av.add_argument('package')
+    avi=sub.add_parser('anchor-verify-inclusion');avi.add_argument('proof')
+    avc=sub.add_parser('anchor-verify-consistency');avc.add_argument('proof')
+    args=p.parse_args(argv)
     if args.command=='demo': print(demo(args.workdir or tempfile.mkdtemp(prefix='coldhandoff-')))
     elif args.command=='init': init(args.db,args.batch,args.box)
     elif args.command=='ingest': print(ingest(args.file,args.db))
@@ -57,4 +76,19 @@ def main():
     elif args.command=='report': print(report(args.db,args.out))
     elif args.command=='inspect':
         db=connect(args.db); print(json.dumps({'decision':[dict(r) for r in db.execute('SELECT * FROM decision WHERE box_id=?',(args.box,))],'events':[dict(r) for r in db.execute('SELECT * FROM raw_event WHERE box_id=? ORDER BY event_time,id',(args.box,))]},ensure_ascii=False));db.close()
+    elif args.command=='anchor-register': print(audit_anchor.register(args.db,args.contract))
+    elif args.command=='anchor-sync': print(json.dumps(audit_anchor.sync_sources(args.db),ensure_ascii=False))
+    elif args.command=='anchor-checkpoint': print(json.dumps(audit_anchor.checkpoint(args.db,args.policy),ensure_ascii=False,indent=2))
+    elif args.command=='anchor-witness':
+        req=json.loads(Path(args.request).read_text(encoding='utf-8'))
+        ack=audit_anchor.SimulatedWitness(args.witness,fork=args.fork).sign(req)
+        Path(args.out).write_text(json.dumps(ack,ensure_ascii=False,indent=2),encoding='utf-8'); print(args.out)
+    elif args.command=='anchor-ack': print(json.dumps(audit_anchor.record_ack(args.db,json.loads(Path(args.ack).read_text(encoding='utf-8'))),ensure_ascii=False))
+    elif args.command=='anchor-recover': print(json.dumps(audit_anchor.recover(args.db),ensure_ascii=False,indent=2))
+    elif args.command=='anchor-inclusion': _emit(audit_anchor.inclusion_proof(args.db,args.source_id),args.out)
+    elif args.command=='anchor-consistency': _emit(audit_anchor.consistency_proof(args.db,args.old_size,args.new_size),args.out)
+    elif args.command=='anchor-export': audit_anchor.export_package(args.db,args.size,args.policy,args.out); print(args.out)
+    elif args.command=='anchor-verify-package': print(json.dumps(audit_anchor.verify_package(json.loads(Path(args.package).read_text(encoding='utf-8'))),ensure_ascii=False,indent=2))
+    elif args.command=='anchor-verify-inclusion': print(json.dumps({'ok':audit_anchor.verify_inclusion_proof(json.loads(Path(args.proof).read_text(encoding='utf-8')))}))
+    elif args.command=='anchor-verify-consistency': print(json.dumps({'ok':audit_anchor.verify_consistency_proof(json.loads(Path(args.proof).read_text(encoding='utf-8')))}))
 if __name__=='__main__': main()
